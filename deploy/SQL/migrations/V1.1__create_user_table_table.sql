@@ -1,8 +1,8 @@
 CREATE TABLE db1_user_accounts
 (
-    id               UUID PRIMARY KEY,
-    created_at       TIMESTAMPTZ DEFAULT now()::TIMESTAMPTZ,
-    last_modified_at TIMESTAMPTZ DEFAULT now()::TIMESTAMPTZ,
+    id               UNIQUEIDENTIFIER PRIMARY KEY,
+    created_at       DATETIMEOFFSET DEFAULT SYSDATETIMEOFFSET(),
+    last_modified_at DATETIMEOFFSET DEFAULT SYSDATETIMEOFFSET(),
     email            VARCHAR   NOT NULL,
     name             VARCHAR   NOT NULL,
     firebase_user_id VARCHAR   NOT NULL,
