@@ -9,7 +9,12 @@ from src.client.cockroach import CockroachDBClient
 from src.client.firebase import FirebaseClient
 from src.db.table.feedback import Feedback
 from src.db.table.user import User
-from src.schemas.user import UserResponse, UserCreateRequest, UserUpdateRequest, RatingRequest
+from src.schemas.user import (
+    RatingRequest,
+    UserCreateRequest,
+    UserResponse,
+    UserUpdateRequest,
+)
 
 
 class UserService:
@@ -60,7 +65,7 @@ class UserService:
 
     @classmethod
     def update_user(
-            cls, user: User, request: UserUpdateRequest, cockroach_client: CockroachDBClient
+        cls, user: User, request: UserUpdateRequest, cockroach_client: CockroachDBClient
     ):
         if request.email is not None and request.email != user.email:
             temp = cockroach_client.query(
@@ -84,7 +89,7 @@ class UserService:
 
     @classmethod
     def add_feedback(
-            cls, user: User, request: RatingRequest, cockroach_client: CockroachDBClient
+        cls, user: User, request: RatingRequest, cockroach_client: CockroachDBClient
     ) -> None:
         cockroach_client.query(
             Feedback.add,
@@ -97,7 +102,7 @@ class UserService:
 
     @classmethod
     def fetch_user_by_id(
-            cls, user_id: UUID, cockroach_client: CockroachDBClient
+        cls, user_id: UUID, cockroach_client: CockroachDBClient
     ) -> UserResponse:
         user: User | None = cockroach_client.query(
             User.get_id, id=user_id, error_not_exist=False

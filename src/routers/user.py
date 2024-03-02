@@ -4,10 +4,15 @@ from fastapi import APIRouter, Depends
 from starlette import status
 from starlette.responses import Response
 
-from src.auth.user_auth import verify_user, VerifiedUser
+from src.auth.user_auth import VerifiedUser, verify_user
 from src.client.cockroach import CockroachDBClient
 from src.client.firebase import FirebaseClient
-from src.schemas.user import UserCreateRequest, UserResponse, RatingRequest, UserUpdateRequest
+from src.schemas.user import (
+    RatingRequest,
+    UserCreateRequest,
+    UserResponse,
+    UserUpdateRequest,
+)
 from src.services.user import UserService
 from src.utils.client import getCockroachClient, getFirebaseClient
 
@@ -44,6 +49,7 @@ async def get_user(
     verified_user: VerifiedUser = Depends(verify_user),
 ):
     return UserService.fetch_user(verified_user.requesting_user)
+
 
 @user_router.post(ENDPOINT_ADD_FEEDBACK)
 async def post_add_feedback(
