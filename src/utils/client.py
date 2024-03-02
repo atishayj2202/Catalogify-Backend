@@ -5,14 +5,14 @@ cockroachClient = None
 firebaseClient = None
 
 
-def getCockroachClient():
+def getCockroachClient() -> CockroachDBClient:
     global cockroachClient
     if cockroachClient is None:
         cockroachClient = CockroachDBClient()
     return cockroachClient
 
 
-def getFirebaseClient():
+def getFirebaseClient() -> FirebaseClient:
     global firebaseClient
     if firebaseClient is None:
         firebaseClient = FirebaseClient()
