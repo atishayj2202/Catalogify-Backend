@@ -1,7 +1,10 @@
 import os
+import time
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.base import RequestResponseEndpoint, BaseHTTPMiddleware
+from starlette.requests import Request
 
 from src.routers.user import user_router
 
@@ -9,7 +12,7 @@ app = FastAPI(title="InnoHack Hackathon", version="0.1.0")
 
 origins = os.environ["CORS_ORIGINS"].split(",")
 
-"""class TimingMiddleware(BaseHTTPMiddleware):
+class TimingMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next: RequestResponseEndpoint):
         start_time = time.time()
 
@@ -24,9 +27,9 @@ origins = os.environ["CORS_ORIGINS"].split(",")
             f"Request {request.method} {request.url} processed in {process_time:.5f} seconds"
         )
 
-        return response"""
+        return response
 
-"""app.add_middleware(TimingMiddleware)"""
+app.add_middleware(TimingMiddleware)
 
 app.add_middleware(
     CORSMiddleware,
