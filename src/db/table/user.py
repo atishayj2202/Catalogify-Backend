@@ -13,4 +13,4 @@ class User(DBSchemaBase):
         return _User
 
 
-_User = Base.from_schema_base(User, "db1_user_accounts")
+_User = Base.from_schema_base(User, "user_accounts")

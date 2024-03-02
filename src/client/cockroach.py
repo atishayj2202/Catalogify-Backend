@@ -15,8 +15,10 @@ class CockroachDBClient:
         self.db_pass = os.environ["DB_PASS"]
         self.db_host = os.environ["DB_HOST"]
         self.db_port = os.environ["DB_PORT"]
+        self.ssl_mode = 'require'
+        self.ssl_cert = os.environ["SSL_CERT_PATH"]
         self.engine = sqlalchemy.create_engine(
-            f"postgresql://{self.db_user}:{self.db_pass}@{self.db_host}:{self.db_port}/{self.db_name}"
+            f"postgresql://{self.db_user}:{self.db_pass}@{self.db_host}:{self.db_port}/{self.db_name}?sslmode={self.ssl_mode}&sslrootcert={self.ssl_cert}"
         )
 
     def get_session_maker(self):

@@ -14,4 +14,4 @@ class Feedback(DBSchemaBase):
         return _Feedback
 
 
-_Feedback = Base.from_schema_base(Feedback, "db1_feedbacks")
+_Feedback = Base.from_schema_base(Feedback, "feedbacks")

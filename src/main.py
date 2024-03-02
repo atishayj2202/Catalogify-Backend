@@ -3,6 +3,8 @@ import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from src.routers.user import user_router
+
 app = FastAPI(title="InnoHack Hackathon", version="0.1.0")
 
 origins = os.environ["CORS_ORIGINS"].split(",")
@@ -45,6 +47,7 @@ async def error_middleware(request: Request, call_next):
             content="Internal Server Error",
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
         )"""
+app.include_router(user_router)
 
 if __name__ == "__main__":
     import uvicorn
