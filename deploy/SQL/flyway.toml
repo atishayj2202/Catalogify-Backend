@@ -1,6 +1,6 @@
-databaseType = "SqlServer"
-name = "Template-Repository"
-id = "01472413-7927-405c-b1d0-5081404cfb6a"
+databaseType = "PostgreSql"
+name = "Azure Postgre Database"
+id = "517e1154-6690-4aff-bce5-380edce8fdd0"
 
 [flywayDesktop]
 developmentEnvironment = "development"
@@ -10,112 +10,19 @@ schemaModel = "./schema-model"
 [redgateCompare]
 filterFile = "filter.rgf"
 
-  [redgateCompare.sqlserver]
-  filterFile = "Filter.scpf"
-
-[redgateCompare.sqlserver.options.behavior]
-addCreateOrAlterForRerunnableScripts = false
-addDropAndCreateForRerunnableScripts = false
-addNoPopulationToFulltextIndexes = false
-addObjectExistenceChecks = false
-addOnlineOnWhenCreatingIndexesOrAlteringColumns = false
-addWithEncryption = false
-considerNextFilegroupInPartitionSchemes = true
-decryptEncryptedObjects = true
-disableAutoColumnMapping = false
-dontUseAlterAssemblyToChangeClrObjects = false
-forbidDuplicateTableStorageSettings = false
-forceColumnOrder = false
-ignoreMigrationScripts = false
-includeDependencies = true
-includeRoleExistenceChecks = true
-includeSchemaExistenceChecks = true
-inlineFulltextFields = false
-inlineTableObjects = false
-useCaseSensitiveObjectDefinition = false
-useDatabaseCompatibilityLevel = false
-useSetStatementsInScriptDatabaseInfo = false
-writeAssembliesAsDlls = false
-
-[redgateCompare.sqlserver.options.ignores]
-ignoreAuthorizationOnSchemaObjects = false
-ignoreBindings = false
-ignoreChangeTracking = false
-ignoreCollations = true
-ignoreComments = false
-ignoreDataCompression = true
-ignoreDataSyncSchema = false
-ignoreDatabaseAndServerNameInSynonyms = true
-ignoreDmlTriggers = false
-ignoreDynamicDataMasking = false
-ignoreEventNotificationsOnQueues = false
-ignoreExtendedProperties = false
-ignoreFileGroupsPartitionSchemesAndPartitionFunctions = true
-ignoreFillFactorAndIndexPadding = true
-ignoreFullTextIndexing = false
-ignoreIdentitySeedAndIncrementValues = false
-ignoreIndexes = false
-ignoreInsteadOfTriggers = false
-ignoreInternallyUsedMicrosoftExtendedProperties = false
-ignoreLockPropertiesOfIndexes = false
-ignoreNocheckAndWithNocheck = false
-ignoreNotForReplication = true
-ignoreNullabilityOfColumns = false
-ignorePerformanceIndexes = false
-ignorePermissions = false
-ignoreReplicationTriggers = true
-ignoreSchemas = false
-ignoreSensitivityClassifications = false
-ignoreSetQuotedIdentifierAndSetAnsiNullsStatements = false
-ignoreSquareBracketsInObjectNames = false
-ignoreStatistics = true
-ignoreStatisticsIncremental = false
-ignoreStatisticsNoRecomputePropertyOnIndexes = false
-ignoreSynonymDependencies = false
-ignoreSystemNamedConstraintAndIndexNames = false
-ignoreTsqltFrameworkAndTests = true
-ignoreUserProperties = true
-ignoreUsersPermissionsAndRoleMemberships = true
-ignoreWhiteSpace = true
-ignoreWithElementOrder = true
-ignoreWithEncryption = false
-ignoreWithNoCheck = true
-
-[redgateCompare.sqlserver.data.options.mapping]
-includeTimestampColumns = false
-useCaseSensitiveObjectDefinition = true
-
-[redgateCompare.sqlserver.data.options.comparison]
-compressTemporaryFiles = false
-forceBinaryCollation = false
-treatEmptyStringAsNull = false
-trimTrailingWhiteSpace = false
-useChecksumComparison = false
-useMaxPrecisionForFloatComparison = false
-
-[redgateCompare.sqlserver.data.options.deployment]
-disableDdlTriggers = true
-disableDmlTriggers = false
-disableForeignKeys = false
-dontIncludeCommentsInScript = false
-dropPrimaryKeysIndexesAndUniqueConstraints = false
-reseedIdentityColumns = false
-skipIntegrityChecksForForeignKeys = false
-transportClrDataTypesAsBinary = false
+[redgateCompare.postgresql.options.ignores]
+ignoreNewlinesInTextObjects = "off"
 
 [flyway]
 mixed = true
 outOfOrder = true
 locations = [ "filesystem:migrations" ]
 validateMigrationNaming = true
-defaultSchema = "dbo"
 
   [flyway.check]
   majorTolerance = 0
 
-[flyway.plugins.clean]
-mode = "all"
-
 [environments.target1]
-url = "jdbc:sqlserver://database-server-atishay.database.windows.net:1433;authentication=sqlPassword;databaseName=DataBase;encrypt=true"
-displayName = "Azure SQL"
+url = "jdbc:postgresql://database-server-atishay.postgres.database.azure.com:5432/innohack-hackathon"
+schemas = [ "public" ]
+displayName = "Azure SQL Database"

@@ -1,12 +1,12 @@
-CREATE TABLE db1_feedbacks
+CREATE TABLE feedbacks
 (
-    id               UNIQUEIDENTIFIER PRIMARY KEY,
-    created_at       DATETIMEOFFSET DEFAULT SYSDATETIMEOFFSET(),
-    last_modified_at DATETIMEOFFSET DEFAULT SYSDATETIMEOFFSET(),
+    id               UUID PRIMARY KEY,
+    created_at       TIMESTAMPTZ DEFAULT now()::TIMESTAMPTZ,
+    last_modified_at TIMESTAMPTZ DEFAULT now()::TIMESTAMPTZ,
     rating           INT  NOT NULL CHECK (rating > 0),
-    feedback         NVARCHAR(MAX) DEFAULT NULL,
-    from_user_id     UNIQUEIDENTIFIER NOT NULL,
-    FOREIGN KEY (from_user_id) REFERENCES db1_user_accounts (id)
+    feedback         VARCHAR DEFAULT NULL,
+    from_user_id     UUID NOT NULL,
+    FOREIGN KEY (from_user_id) REFERENCES user_accounts (id)
 );
 
-CREATE INDEX feedbacks_from_user_id_idx ON db1_feedbacks (from_user_id);
+CREATE INDEX feedbacks_from_user_id_idx ON feedbacks (from_user_id);

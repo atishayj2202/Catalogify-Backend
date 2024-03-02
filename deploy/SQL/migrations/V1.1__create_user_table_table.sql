@@ -1,8 +1,8 @@
-CREATE TABLE db1_user_accounts
+CREATE TABLE user_accounts
 (
-    id               UNIQUEIDENTIFIER PRIMARY KEY,
-    created_at       DATETIMEOFFSET DEFAULT SYSDATETIMEOFFSET(),
-    last_modified_at DATETIMEOFFSET DEFAULT SYSDATETIMEOFFSET(),
+    id               UUID PRIMARY KEY,
+    created_at       TIMESTAMPTZ DEFAULT now()::TIMESTAMPTZ,
+    last_modified_at TIMESTAMPTZ DEFAULT now()::TIMESTAMPTZ,
     email            VARCHAR   NOT NULL,
     name             VARCHAR   NOT NULL,
     firebase_user_id VARCHAR   NOT NULL,
@@ -10,5 +10,5 @@ CREATE TABLE db1_user_accounts
     UNIQUE (email)
 );
 
-CREATE INDEX idx_firebase_user_id ON db1_user_accounts(firebase_user_id);
-CREATE INDEX idx_phone_no ON db1_user_accounts(email);
+CREATE INDEX idx_firebase_user_id ON user_accounts(firebase_user_id);
+CREATE INDEX idx_phone_no ON user_accounts(email);
