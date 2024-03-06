@@ -8,7 +8,7 @@ from src.auth.user_auth import VerifiedUser, verify_user
 from src.client.cockroach import CockroachDBClient
 from src.client.firebase import FirebaseClient
 from src.client.openai_client import OpenAIClient
-from src.schemas.post import PostCreateRequest, PostShortResponse
+from src.schemas.post import PostCreateRequest, PostLongResponse
 from src.schemas.user import (
     RatingRequest,
     UserCreateRequest,
@@ -110,7 +110,7 @@ async def post_new_post(
     return Response(status_code=status.HTTP_200_OK)
 
 
-@user_router.get(ENDPOINT_LIST_POST, response_model=list[PostShortResponse])
+@user_router.get(ENDPOINT_LIST_POST, response_model=list[PostLongResponse])
 async def get_list_post(
     verified_user: VerifiedUser = Depends(verify_user),
     cockroach_client: CockroachDBClient = Depends(getCockroachClient),

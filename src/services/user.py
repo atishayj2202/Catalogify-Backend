@@ -10,7 +10,7 @@ from src.client.firebase import FirebaseClient
 from src.db.table.feedback import Feedback
 from src.db.table.post import Post
 from src.db.table.user import User
-from src.schemas.post import PostCreateRequest, PostShortResponse
+from src.schemas.post import PostCreateRequest, PostLongResponse
 from src.schemas.user import (
     RatingRequest,
     UserCreateRequest,
@@ -142,7 +142,7 @@ class UserService:
     @classmethod
     def fetch_posts(
         cls, user: User, cockroach_client: CockroachDBClient
-    ) -> list[PostShortResponse]:
+    ) -> list[PostLongResponse]:
         posts: list[Post] | None = cockroach_client.query(
             Post.get_by_multiple_field_multiple,
             fields=["user_id", "is_deleted"],
@@ -151,16 +151,24 @@ class UserService:
         )
         if posts is None:
             return []
-        temp: list[PostShortResponse] = []
-        for i in posts:
+        temp: list[PostLongResponse] = []
+        for post in posts:
             temp.append(
-                PostShortResponse(
-                    id=i.id,
-                    created_at=i.created_at,
-                    title=i.title,
-                    category=i.category,
-                    images=i.images,
-                    description=i.description,
+                PostLongResponse(
+                    id=post.id,
+                    created_at=post.created_at,
+                    user_id=post.user_id,
+                    title=post.title,
+                    category=post.category,
+                    images=post.images,
+                    description=post.description,
+                    cost=post.cost,
+                    brand=post.brand,
+                    warranty_yrs=post.warranty_yrs,
+                    warranty_months=post.warranty_months,
+                    return_days=post.return_days,
+                    seller_location=post.seller_location,
+                    in_box=post.in_box,
                 )
             )
         return temp
