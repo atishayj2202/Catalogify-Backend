@@ -79,3 +79,29 @@ async def get_create_assessment(
     return PostService.fetch_assessment(
         post=verified_post.requesting_post, cockroach_client=cockroach_client
     )
+
+
+@post_router.get(ENDPOINT_ADD_LIKE)
+async def get_add_like(
+    verified_post: VerifiedPost = Depends(verify_post),
+    cockroach_client: CockroachDBClient = Depends(getCockroachClient),
+):
+    PostService.add_like(
+        post=verified_post.requesting_post,
+        cockroach_client=cockroach_client,
+        user=verified_post.requesting_user,
+    )
+    return Response(status_code=status.HTTP_200_OK)
+
+
+@post_router.get(ENDPOINT_ADD_DISLIKE)
+async def get_add_like(
+    verified_post: VerifiedPost = Depends(verify_post),
+    cockroach_client: CockroachDBClient = Depends(getCockroachClient),
+):
+    PostService.add_dislike(
+        post=verified_post.requesting_post,
+        cockroach_client=cockroach_client,
+        user=verified_post.requesting_user,
+    )
+    return Response(status_code=status.HTTP_200_OK)

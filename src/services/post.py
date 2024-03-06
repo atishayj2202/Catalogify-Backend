@@ -6,6 +6,8 @@ from src.client.computer_vision import ComputerVisionCli
 from src.client.openai_client import OpenAIClient
 from src.db.table.assessment import Assessment
 from src.db.table.post import Post
+from src.db.table.reaction import Reaction
+from src.db.table.user import User
 from src.schemas.post import AssessmentResponse, PostEditRequest, PostLongResponse
 from src.utils.time import get_current_time
 
@@ -129,3 +131,41 @@ class PostService:
             recommendation=assess.assessment6,
             total=assess.total,
         )
+
+    @classmethod
+    def add_like(cls, post: Post, cockroach_client: CockroachDBClient, user: User):
+        reaction: Reaction | None = cockroach_client.query(
+            Reaction.get_by_multiple_field_unique,
+            error_not_exist=False,
+            fields=["post_id", "user_id"],
+            match_values=[post.id, user.id],
+        )
+        if reaction is None:
+            cockroach_client.query(
+                Reaction.add,
+                items=[Reaction(user_id=user.id, post_id=post.id, reaction=True)],
+            )
+        else:
+            reaction.reaction = True
+            cockroach_client.query(
+                Reaction.update_by_id, id=reaction.id, new_data=reaction
+            )
+
+    @classmethod
+    def add_dislike(cls, post: Post, cockroach_client: CockroachDBClient, user: User):
+        reaction: Reaction | None = cockroach_client.query(
+            Reaction.get_by_multiple_field_unique,
+            error_not_exist=False,
+            fields=["post_id", "user_id"],
+            match_values=[post.id, user.id],
+        )
+        if reaction is None:
+            cockroach_client.query(
+                Reaction.add,
+                items=[Reaction(user_id=user.id, post_id=post.id, reaction=False)],
+            )
+        else:
+            reaction.reaction = False
+            cockroach_client.query(
+                Reaction.update_by_id, id=reaction.id, new_data=reaction
+            )
