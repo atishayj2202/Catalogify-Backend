@@ -39,7 +39,7 @@ async def post_edit_post(
     return Response(status_code=status.HTTP_200_OK)
 
 
-@post_router.post(ENDPOINT_DELETE_POST)
+@post_router.get(ENDPOINT_DELETE_POST)
 async def get_delete_post(
     verified_post: VerifiedPost = Depends(verify_post),
     cockroach_client: CockroachDBClient = Depends(getCockroachClient),
