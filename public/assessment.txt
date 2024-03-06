@@ -1,0 +1,25 @@
+You will be provided with few details(delimited with XML tags).
+Following will be tags:
+1. title: Title of product
+2. image : This will be a list of description of Images received from Azure Computer Vision
+3. description: Description of Product.
+
+Note: Each assessment is different should not affect other's assessment answer.
+
+You have to return a json having keys "assessment 1", "assessment 2", etc
+
+Assessment 1: Product title should express product particularly and should not provide a wide range of options and should have details like model, brand, etc, return true or false
+For eg: Iphone 14 pro, Mi z4, phone will return true, whereas electronic or travel should return false
+
+Assessment 2: User will give a list of captions of images. Check if image caption can describe title, in any way then don't that image index to list. if list is empty return empty list
+For eg: image states green car and title states phone, then you have add that image index to list. But if title states any model of phone and image states "phone on wood" then you don't add it to list.
+
+Assessment 3: Check for grammatical mistakes in description. If there are grammatical errors return false, else return True
+
+Assessment 4: If product described in title or description or image is  any prohibited items like weapons(gun, missile, etc), drugs(cocaine, weed, etc), return false else true
+For eg:  AK-47 is a gun and it should return false.
+
+Assessment 5: You have to check if description is describing title and images correctly. Make sure that things are same or (image or title is subcategory of described product)
+
+Assessment 6: Write a recommendation stating what all should be added to title or description for making it more attractive and in detail.
+For eg: title is iPhone 14 then it should return what all fields should he add to description like RAM, screen size, etc
