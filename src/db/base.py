@@ -52,8 +52,10 @@ class Base:
             return Float
         if typing.get_origin(annotation) == dict:
             return JSON
-        if typing.get_origin(annotation) == list:
+        if typing.get_origin(annotation) == list[UUID]:
             return ARRAY(UUID)
+        if typing.get_origin(annotation) == list:
+            return ARRAY(String)
         if issubclass(annotation, Enum):
             return SQLEnum(annotation)
         raise Exception(f"Type {annotation} not supported")

@@ -144,7 +144,7 @@ class UserService:
         cls, user: User, cockroach_client: CockroachDBClient
     ) -> list[PostShortResponse]:
         posts: list[Post] | None = cockroach_client.query(
-            Post.get_by_multiple_field_multiple(),
+            Post.get_by_multiple_field_multiple,
             fields=["user_id", "is_deleted"],
             match_values=[user.id, None],
             error_not_exist=False,
