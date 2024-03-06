@@ -9,7 +9,7 @@ from starlette.requests import Request
 from src.routers.post import post_router
 from src.routers.user import user_router
 
-app = FastAPI(title="InnoHack Hackathon", version="0.1.3-dev1")
+app = FastAPI(title="InnoHack Hackathon", version="0.1.3-dev2")
 
 origins = os.environ["CORS_ORIGINS"].split(",")
 
