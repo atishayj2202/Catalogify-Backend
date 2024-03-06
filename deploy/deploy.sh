@@ -5,7 +5,7 @@ export PROJECT_NAME=winged-octagon-413211
 
 # docker details
 export IMAGE_NAME=innohack-hackathon-backend
-export IMAGE_VERSION=0.1.2-dev6
+export IMAGE_VERSION=0.1.2
 export REPOSITORY_NAME=atishayj2202
 export FULL_IMAGE_NAME=${REPOSITORY_NAME}/${IMAGE_NAME}:${IMAGE_VERSION}
 export FLYWAY_CONTAINER_NAME=flyway/flyway:latest

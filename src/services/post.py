@@ -73,7 +73,6 @@ class PostService:
         assess = ai_client.get_assessment_reply(
             title=post.title, images=temp, description=post.description
         )
-        print(assess)
         score = (
             int(not assess["assessment 5"])
             + int(not assess["assessment 4"])
