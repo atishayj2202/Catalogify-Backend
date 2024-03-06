@@ -8,7 +8,9 @@ from starlette import status
 from src.client.cockroach import CockroachDBClient
 from src.client.firebase import FirebaseClient
 from src.db.table.feedback import Feedback
+from src.db.table.post import Post
 from src.db.table.user import User
+from src.schemas.post import PostCreateRequest, PostShortResponse
 from src.schemas.user import (
     RatingRequest,
     UserCreateRequest,
@@ -112,3 +114,53 @@ class UserService:
                 status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
             )
         return cls.fetch_user(user)
+
+    @classmethod
+    def create_post(
+        cls, user: User, request: PostCreateRequest, cockroach_client: CockroachDBClient
+    ):
+        cockroach_client.query(
+            Post.add,
+            items=[
+                Post(
+                    user_id=user.id,
+                    title=request.title,
+                    category=request.category,
+                    images=request.images,
+                    description=request.description,
+                    cost=request.cost,
+                    brand=request.brand,
+                    warranty_yrs=(request.warranty_months // 12),
+                    warranty_months=(request.warranty_months % 12),
+                    return_days=request.return_days,
+                    seller_location=request.seller_location,
+                    in_box=request.in_box,
+                )
+            ],
+        )
+
+    @classmethod
+    def fetch_posts(
+        cls, user: User, cockroach_client: CockroachDBClient
+    ) -> list[PostShortResponse]:
+        posts: list[Post] | None = cockroach_client.query(
+            Post.get_by_field_multiple,
+            field="user_id",
+            match_value=user.id,
+            error_not_exist=False,
+        )
+        if posts is None:
+            return []
+        temp: list[PostShortResponse] = []
+        for i in posts:
+            temp.append(
+                PostShortResponse(
+                    id=i.id,
+                    created_at=i.created_at,
+                    title=i.title,
+                    category=i.category,
+                    images=i.images,
+                    description=i.description,
+                )
+            )
+        return temp

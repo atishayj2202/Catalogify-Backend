@@ -13,7 +13,6 @@ class PostCreateRequest(BaseModel):
     description: str
     cost: float
     brand: str = "unbranded"
-    warranty_yrs: int = 0
     warranty_months: int = 0
     return_days: int = 0
     seller_location: str | None = None
