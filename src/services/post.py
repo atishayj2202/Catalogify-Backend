@@ -73,13 +73,14 @@ class PostService:
         assess = ai_client.get_assessment_reply(
             title=post.title, images=temp, description=post.description
         )
+        print(assess)
         score = (
-            int(assess["assessment5"])
-            + int(assess["assessment4"])
-            + int(assess["assessment3"])
-            + int(assess["assessment1"])
+            int(not assess["assessment 5"])
+            + int(not assess["assessment 4"])
+            + int(not assess["assessment 3"])
+            + int(not assess["assessment 1"])
         ) * 10
-        score = score + (len(assess["assessment2"]) * 5)
+        score = score + (len(assess["assessment 2"]) * 5)
         score = 100 - score
         temp2: Assessment | None = cockroach_client.query(
             Assessment.get_by_field_unique,
@@ -94,12 +95,12 @@ class PostService:
             items=[
                 Assessment(
                     post_id=post.id,
-                    assessment1=assess["assessment1"],
-                    assessment2=[str(integer) for integer in assess["assessment2"]],
-                    assessment3=assess["assessment3"],
-                    assessment4=assess["assessment4"],
-                    assessment5=assess["assessment5"],
-                    assessment6=assess["assessment6"],
+                    assessment1=assess["assessment 1"],
+                    assessment2=[str(integer) for integer in assess["assessment 2"]],
+                    assessment3=assess["assessment 3"],
+                    assessment4=assess["assessment 4"],
+                    assessment5=assess["assessment 5"],
+                    assessment6=assess["assessment 6"],
                     total=score,
                 )
             ],
