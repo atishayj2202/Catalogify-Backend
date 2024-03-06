@@ -246,6 +246,7 @@ class DBSchemaBase(BaseModel, ABC):
         result = (
             db.query(schema_cls)
             .filter(and_(getattr(schema_cls, field) == match_value))
+            .order_by(getattr(schema_cls, "created_at").desc())
             .all()
         )
         if result:
@@ -276,6 +277,7 @@ class DBSchemaBase(BaseModel, ABC):
                     getattr(schema_cls, time_field).between(start_time, end_time),
                 )
             )
+            .order_by(getattr(schema_cls, "created_at").desc())
             .all()
         )
         if result:
