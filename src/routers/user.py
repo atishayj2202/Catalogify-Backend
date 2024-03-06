@@ -24,6 +24,8 @@ ENDPOINT_GET_USER = "/get-user/"  # done
 ENDPOINT_FIND_USER_BY_ID = "/{user_id}/fetch-user-by-id/"  # done
 ENDPOINT_ADD_FEEDBACK = "/add-feedback/"  # done
 ENDPOINT_UPDATE_USER = "/update-user/"  # done
+ENDPOINT_NEW_POST = "/new-post/"  # pending
+ENDPOINT_LIST_POST = "/list-posts/"  # pending
 
 
 @user_router.post(ENDPOINT_CREATE_USER)
