@@ -20,8 +20,8 @@ class PostCreateRequest(BaseModel):
 
 
 class PostShortResponse(BaseModel):
-    id = UUID
-    created_at = datetime
+    id: UUID
+    created_at: datetime
     title: str
     category: PostCategory
     images: list[str]
@@ -29,9 +29,9 @@ class PostShortResponse(BaseModel):
 
 
 class PostLongResponse(BaseModel):
-    id = UUID
-    created_at = datetime
-    user_id = UUID
+    id: UUID
+    created_at: datetime
+    user_id: UUID
     title: str
     category: PostCategory
     images: list[str]
