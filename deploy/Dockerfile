@@ -14,6 +14,7 @@ RUN poetry config virtualenvs.create false
 RUN poetry install --no-root
 
 # copy code and resources
+COPY public /code/public
 COPY src /code/src
 COPY deploy-keys /code/keys
 
