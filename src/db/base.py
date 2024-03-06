@@ -54,6 +54,8 @@ class Base:
             return JSON
         if typing.get_origin(annotation) == list[UUID]:
             return ARRAY(UUID)
+        if typing.get_origin(annotation) == list[int]:
+            return ARRAY(Integer)
         if typing.get_origin(annotation) == list:
             return ARRAY(String)
         if issubclass(annotation, Enum):

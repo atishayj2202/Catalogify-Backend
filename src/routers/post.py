@@ -6,7 +6,7 @@ from src.auth.user_auth import VerifiedPost, verify_post
 from src.client.cockroach import CockroachDBClient
 from src.client.computer_vision import ComputerVisionCli
 from src.client.openai_client import OpenAIClient
-from src.schemas.post import PostEditRequest, PostLongResponse
+from src.schemas.post import AssessmentResponse, PostEditRequest, PostLongResponse
 from src.services.post import PostService
 from src.utils.client import getCockroachClient
 
@@ -70,13 +70,12 @@ async def get_create_assessment(
     )
     return Response(status_code=status.HTTP_200_OK)
 
-@post_router.get(ENDPOINT_GET_ASSESSMENT)
+
+@post_router.get(ENDPOINT_GET_ASSESSMENT, response_model=AssessmentResponse)
 async def get_create_assessment(
     verified_post: VerifiedPost = Depends(verify_post),
     cockroach_client: CockroachDBClient = Depends(getCockroachClient),
 ):
-    PostService.fetch_assessment(
-        post=verified_post.requesting_post,
-        cockroach_client=cockroach_client
+    return PostService.fetch_assessment(
+        post=verified_post.requesting_post, cockroach_client=cockroach_client
     )
-    return Response(status_code=status.HTTP_200_OK)
