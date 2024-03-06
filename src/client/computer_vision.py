@@ -16,13 +16,11 @@ class ComputerVisionCli:
 
     def analyze_image(self, ImageURL):
         description = self._client.describe_image(ImageURL)
-        captions = description.captions
-        for caption in captions:
-            print(caption.text)
+        return description.captions
 
 
 if __name__ == "__main__":
     tempfile = ComputerVisionCli()
-    tempfile.analyze_image(
+    print(tempfile.analyze_image(
         "https://www.shutterstock.com/image-photo/tropical-paradise-beach-white-sand-260nw-1201599862.jpg"
-    )
+    ))
