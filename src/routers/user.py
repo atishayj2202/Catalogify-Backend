@@ -6,6 +6,7 @@ from starlette.responses import Response
 
 from src.auth.user_auth import VerifiedUser, verify_user
 from src.client.cockroach import CockroachDBClient
+from src.client.computer_vision import ComputerVisionCli
 from src.client.firebase import FirebaseClient
 from src.client.openai_client import OpenAIClient
 from src.schemas.post import PostCreateRequest, PostLongResponse
@@ -35,7 +36,6 @@ async def post_create_user(
     request: UserCreateRequest,
     cockroach_client: CockroachDBClient = Depends(getCockroachClient),
     firebase_client: FirebaseClient = Depends(getFirebaseClient),
-    ai_client : OpenAIClient = Depends(OpenAIClient)
 ):
     UserService.create_user(request, cockroach_client, firebase_client)
     return Response(status_code=status.HTTP_200_OK)
@@ -101,6 +101,8 @@ async def post_new_post(
     request: PostCreateRequest,
     verified_user: VerifiedUser = Depends(verify_user),
     cockroach_client: CockroachDBClient = Depends(getCockroachClient),
+    ai_client: OpenAIClient = Depends(OpenAIClient),
+    image_parser_client: ComputerVisionCli = Depends(ComputerVisionCli),
 ):
     UserService.create_post(
         user=verified_user.requesting_user,

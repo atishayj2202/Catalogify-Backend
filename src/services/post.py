@@ -2,6 +2,9 @@ from starlette import status
 from starlette.exceptions import HTTPException
 
 from src.client.cockroach import CockroachDBClient
+from src.client.computer_vision import ComputerVisionCli
+from src.client.openai_client import OpenAIClient
+from src.db.table.assessment import Assessment
 from src.db.table.post import Post
 from src.schemas.post import PostEditRequest, PostLongResponse
 from src.utils.time import get_current_time
@@ -55,3 +58,49 @@ class PostService:
             )
         post.is_deleted = get_current_time()
         cockroach_client.query(Post.update_by_id, id=post.id, new_data=post)
+
+    @classmethod
+    def post_assessment(
+        cls,
+        post: Post,
+        cockroach_client: CockroachDBClient,
+        ai_client: OpenAIClient,
+        image_parser_client: ComputerVisionCli,
+    ):
+        temp = []
+        for i in post.images:
+            temp.append(image_parser_client.analyze_image(i))
+        assess = ai_client.get_assessment_reply(
+            title=post.title, images=temp, description=post.description
+        )
+        score = (
+            int(assess["assessment5"])
+            + int(assess["assessment4"])
+            + int(assess["assessment3"])
+            + int(assess["assessment1"])
+        ) * 10
+        score = score + (len(assess["assessment2"]) * 5)
+        score = 100 - score
+        temp2: Assessment | None = cockroach_client.query(
+            Assessment.get_by_field_unique,
+            field="post_id",
+            match_value=post.id,
+            error_not_exist=False,
+        )
+        if temp2 is not None:
+            cockroach_client.query(Assessment.delete_by_id, id=temp2.id)
+        cockroach_client.query(
+            Assessment.add,
+            items=[
+                Assessment(
+                    post_id=post.id,
+                    assessment1=assess["assessment1"],
+                    assessment2=[str(integer) for integer in assess["assessment2"]],
+                    assessment3=assess["assessment3"],
+                    assessment4=assess["assessment4"],
+                    assessment5=assess["assessment5"],
+                    assessment6=assess["assessment6"],
+                    total=score,
+                )
+            ],
+        )
