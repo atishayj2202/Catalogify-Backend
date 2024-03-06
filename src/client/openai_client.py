@@ -50,10 +50,20 @@ class OpenAIClient:
 
 
 if __name__ == "__main__":
+
     def return_test_text():
         with open("keys/test.txt", "r") as file:
             text = file.read()
             return text
 
     AIClient = OpenAIClient()
-    print()
+    print(
+        AIClient.get_assessment_reply(
+            title="Portable Laptop wooden Table",
+            images=[
+                "iPhone on a wooden table",
+                "a group of smoke stacks with smoke coming out of them",
+            ],
+            description="Latest iPhone runs instead of A17 Bionic Chip",
+        )
+    )
