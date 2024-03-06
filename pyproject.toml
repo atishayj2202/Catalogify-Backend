@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "InnoHack Hackathon"
-version = "0.1.2-dev3"
+version = "0.1.2-dev4"
 description = "InnoHack Hackathon Backend Repository with PostgreSQL(SQLalchemy) FastAPI Firebase Auth"
 authors = ["ATISHAY JAIN <atishayj.dev@gmail.com>"]
 readme = "README.md"
