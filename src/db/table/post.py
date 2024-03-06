@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Type
 from uuid import UUID
 
@@ -18,6 +19,7 @@ class Post(DBSchemaBase):
     return_days: int = 0
     seller_location: str | None = None
     in_box: str | None = None
+    is_deleted: datetime | None = None
 
     @classmethod
     def _schema_cls(cls) -> Type[Base]:
