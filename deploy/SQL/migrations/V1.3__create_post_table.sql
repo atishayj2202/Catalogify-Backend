@@ -15,5 +15,9 @@ CREATE TABLE posts
     warranty_months  INT           NOT NULL DEFAULT 0,
     return_days      INT           NOT NULL DEFAULT 0,
     seller_location  TEXT                   DEFAULT NULL,
-    in_box           TEXT                   DEFAULT NULL
+    in_box           TEXT                   DEFAULT NULL,
+    FOREIGN KEY (user_id) REFERENCES user_accounts(id)
 );
+
+CREATE INDEX post_user_id ON posts(user_id);
+CREATE INDEX post_id ON posts(id);
