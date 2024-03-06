@@ -10,8 +10,9 @@ from src.utils.client import getCockroachClient
 
 POST_PREFIX = "/post"
 post_router = APIRouter(prefix=POST_PREFIX)
-ENDPOINT_GET_POST = "/{post_id}/get-post/"  # pending
-ENDPOINT_EDIT_POST = "/{post_id}/edit-post/"  # pending
+ENDPOINT_GET_POST = "/{post_id}/get-post/"  # done
+ENDPOINT_EDIT_POST = "/{post_id}/edit-post/"  # done
+ENDPOINT_DELETE_POST = "/{post_id}/delete-post/"  # pending
 ENDPOINT_GET_ASSESSMENT = "/{post_id}/get-assessment/"  # pending
 ENDPOINT_GET_CATALOG = "/{post_id}/get-catalog/"  # pending
 ENDPOINT_GET_COMPETITORS = "/{post_id}/get-competitors/"  # pending
@@ -34,5 +35,16 @@ async def post_edit_post(
         post=verified_post.requesting_post,
         request=request,
         cockroach_client=cockroach_client,
+    )
+    return Response(status_code=status.HTTP_200_OK)
+
+
+@post_router.post(ENDPOINT_DELETE_POST)
+async def get_delete_post(
+    verified_post: VerifiedPost = Depends(verify_post),
+    cockroach_client: CockroachDBClient = Depends(getCockroachClient),
+):
+    PostService.delete_post(
+        post=verified_post.requesting_post, cockroach_client=cockroach_client
     )
     return Response(status_code=status.HTTP_200_OK)

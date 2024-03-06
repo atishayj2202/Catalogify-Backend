@@ -1,6 +1,10 @@
+from starlette import status
+from starlette.exceptions import HTTPException
+
 from src.client.cockroach import CockroachDBClient
 from src.db.table.post import Post
 from src.schemas.post import PostEditRequest, PostLongResponse
+from src.utils.time import get_current_time
 
 
 class PostService:
@@ -41,4 +45,13 @@ class PostService:
             post.seller_location = request.seller_location
         if request.in_box is not None:
             post.in_box = request.in_box
+        cockroach_client.query(Post.update_by_id, id=post.id, new_data=post)
+
+    @classmethod
+    def delete_post(cls, post: Post, cockroach_client: CockroachDBClient):
+        if post.is_deleted is not None:
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT, detail="Post already deleted"
+            )
+        post.is_deleted = get_current_time()
         cockroach_client.query(Post.update_by_id, id=post.id, new_data=post)
