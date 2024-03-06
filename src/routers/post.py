@@ -12,7 +12,7 @@ POST_PREFIX = "/post"
 post_router = APIRouter(prefix=POST_PREFIX)
 ENDPOINT_GET_POST = "/{post_id}/get-post/"  # done
 ENDPOINT_EDIT_POST = "/{post_id}/edit-post/"  # done
-ENDPOINT_DELETE_POST = "/{post_id}/delete-post/"  # pending
+ENDPOINT_DELETE_POST = "/{post_id}/delete-post/"  # done
 ENDPOINT_GET_ASSESSMENT = "/{post_id}/get-assessment/"  # pending
 ENDPOINT_GET_CATALOG = "/{post_id}/get-catalog/"  # pending
 ENDPOINT_GET_COMPETITORS = "/{post_id}/get-competitors/"  # pending
