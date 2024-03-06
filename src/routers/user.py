@@ -29,6 +29,7 @@ ENDPOINT_ADD_FEEDBACK = "/add-feedback/"  # done
 ENDPOINT_UPDATE_USER = "/update-user/"  # done
 ENDPOINT_NEW_POST = "/new-post/"  # done
 ENDPOINT_LIST_POST = "/list-posts/"  # done
+ENDPOINT_GET_LEADERBOARD = "/get-leaderboard/" # pending
 
 
 @user_router.post(ENDPOINT_CREATE_USER)

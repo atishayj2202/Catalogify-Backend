@@ -120,9 +120,12 @@ class UserService:
 
     @classmethod
     def create_post(
-        cls, user: User, request: PostCreateRequest, cockroach_client: CockroachDBClient,
+        cls,
+        user: User,
+        request: PostCreateRequest,
+        cockroach_client: CockroachDBClient,
         ai_client: OpenAIClient,
-        image_parser_client: ComputerVisionCli
+        image_parser_client: ComputerVisionCli,
     ):
         post = Post(
             user_id=user.id,
@@ -140,9 +143,7 @@ class UserService:
         )
         cockroach_client.query(
             Post.add,
-            items=[
-                post
-            ],
+            items=[post],
         )
         PostService.post_assessment(
             post=post,
