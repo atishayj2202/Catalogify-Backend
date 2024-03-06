@@ -6,7 +6,9 @@ from firebase_admin.auth import UserRecord
 from starlette import status
 
 from src.client.cockroach import CockroachDBClient
+from src.client.computer_vision import ComputerVisionCli
 from src.client.firebase import FirebaseClient
+from src.client.openai_client import OpenAIClient
 from src.db.table.feedback import Feedback
 from src.db.table.post import Post
 from src.db.table.user import User
@@ -17,6 +19,7 @@ from src.schemas.user import (
     UserResponse,
     UserUpdateRequest,
 )
+from src.services.post import PostService
 
 
 class UserService:
@@ -117,26 +120,35 @@ class UserService:
 
     @classmethod
     def create_post(
-        cls, user: User, request: PostCreateRequest, cockroach_client: CockroachDBClient
+        cls, user: User, request: PostCreateRequest, cockroach_client: CockroachDBClient,
+        ai_client: OpenAIClient,
+        image_parser_client: ComputerVisionCli
     ):
+        post = Post(
+            user_id=user.id,
+            title=request.title,
+            category=request.category,
+            images=request.images,
+            description=request.description,
+            cost=request.cost,
+            brand=request.brand,
+            warranty_yrs=(request.warranty_months // 12),
+            warranty_months=(request.warranty_months % 12),
+            return_days=request.return_days,
+            seller_location=request.seller_location,
+            in_box=request.in_box,
+        )
         cockroach_client.query(
             Post.add,
             items=[
-                Post(
-                    user_id=user.id,
-                    title=request.title,
-                    category=request.category,
-                    images=request.images,
-                    description=request.description,
-                    cost=request.cost,
-                    brand=request.brand,
-                    warranty_yrs=(request.warranty_months // 12),
-                    warranty_months=(request.warranty_months % 12),
-                    return_days=request.return_days,
-                    seller_location=request.seller_location,
-                    in_box=request.in_box,
-                )
+                post
             ],
+        )
+        PostService.post_assessment(
+            post=post,
+            cockroach_client=cockroach_client,
+            ai_client=ai_client,
+            image_parser_client=image_parser_client,
         )
 
     @classmethod
