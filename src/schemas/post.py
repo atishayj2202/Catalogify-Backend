@@ -53,3 +53,14 @@ class PostEditRequest(BaseModel):
     brand: str | None = None
     seller_location: str | None = None
     in_box: str | None = None
+
+
+class AssessmentResponse(BaseModel):
+    post_id: UUID
+    assessment1: bool
+    assessment2: list[str]
+    assessment3: bool
+    assessment4: bool
+    assessment5: bool
+    recommendation: str
+    total: int

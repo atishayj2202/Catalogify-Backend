@@ -6,7 +6,7 @@ from src.client.computer_vision import ComputerVisionCli
 from src.client.openai_client import OpenAIClient
 from src.db.table.assessment import Assessment
 from src.db.table.post import Post
-from src.schemas.post import PostEditRequest, PostLongResponse
+from src.schemas.post import PostEditRequest, PostLongResponse, AssessmentResponse
 from src.utils.time import get_current_time
 
 
@@ -103,4 +103,27 @@ class PostService:
                     total=score,
                 )
             ],
+        )
+
+    @classmethod
+    def fetch_assessment(cls, post: Post, cockroach_client: CockroachDBClient) -> AssessmentResponse:
+        assess: Assessment | None = cockroach_client.query(
+            Assessment.get_by_field_unique,
+            field="post_id",
+            match_value=post.id,
+            error_not_exist=False,
+        )
+        if assess is None:
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT, detail="Post Not Found"
+            )
+        return AssessmentResponse(
+            post_id = assess.post_id,
+            assessment1 = assess.assessment1,
+            assessment2 = assess.assessment2,
+            assessment3 = assess.assessment3,
+            assessment4 = assess.assessment4,
+            assessment5 = assess.assessment5,
+            recommendation = assess.assessment6,
+            total = assess.total
         )
