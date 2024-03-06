@@ -17,8 +17,8 @@ ENDPOINT_EDIT_POST = "/{post_id}/edit-post/"  # done
 ENDPOINT_DELETE_POST = "/{post_id}/delete-post/"  # done
 ENDPOINT_CREATE_ASSESSMENT = "/{post_id}/create-assessment/"  # done
 ENDPOINT_GET_ASSESSMENT = "/{post_id}/get-assessment/"  # done
-ENDPOINT_ADD_LIKE = "/{post_id}/add-like"  # pending
-ENDPOINT_ADD_DISLIKE = "/{post_id}/add-dislike"  # pending
+ENDPOINT_ADD_LIKE = "/{post_id}/add-like"  # done
+ENDPOINT_ADD_DISLIKE = "/{post_id}/add-dislike"  # done
 ENDPOINT_GET_CATALOG = "/{post_id}/get-catalog/"  # pending
 ENDPOINT_GET_COMPETITORS = "/{post_id}/get-competitors/"  # pending
 
