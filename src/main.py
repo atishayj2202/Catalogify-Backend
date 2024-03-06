@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint
 from starlette.requests import Request
 
+from src.routers.post import post_router
 from src.routers.user import user_router
 
 app = FastAPI(title="InnoHack Hackathon", version="0.1.2-dev1")
@@ -53,6 +54,7 @@ async def error_middleware(request: Request, call_next):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
         )"""
 app.include_router(user_router)
+app.include_router(post_router)
 
 if __name__ == "__main__":
     import uvicorn
