@@ -1,4 +1,4 @@
-# Innohack Backend - Google Solution Challenge
+# Innohack Backend - Innohack Hackathon
 
 Welcome to the Innohack backend repository for the Innohack Hackathon! This backend repository serves as the core infrastructure powering the Catalogify platform,offers a friendly interface, letting you access Catalogify's features easily on your phone. Search, manage tasks, and communicate effortlessly.
 
@@ -10,7 +10,7 @@ This section contains links to the frontend and backend repositories, as well as
 -  Repository URL: [(https://github.com/Ahmedazim7804/InnoHack)](https://github.com/Ahmedazim7804/InnoHack)
 
 ### Backend Repository
--  Repository URL: [(https://github.com/atishayj2202/SyncNexus-Backend)](https://github.com/atishayj2202/InnoHack-Hackathon-Backend)
+-  Repository URL:(https://github.com/atishayj2202/InnoHack-Hackathon-Backend)
 
 ### Backend API Endpoint Base URL
 -Base URL: https://innohack-hackathon-server.yellowbush-cadc3844.centralindia.azurecontainerapps.io 
@@ -24,6 +24,8 @@ This section contains links to the frontend and backend repositories, as well as
 - **Database**: PostgresSQL(Google Cloud SQL)
 - **Authentication**: Firebase Authentication
 - **Deployment**: Google Cloud Run
+- **OpenAI/ChatGpt**: Vaildation of text and quality
+- **Microsoft Azure Computer Vision**: Image detection    
 - **Poetry**: Poetry is used as the dependency manager for managing Python packages and dependencies.
 
 ## Project Structure
