@@ -9,7 +9,7 @@ from src.client.cockroach import CockroachDBClient
 from src.client.computer_vision import ComputerVisionCli
 from src.client.firebase import FirebaseClient
 from src.client.openai_client import OpenAIClient
-from src.schemas.post import PostCreateRequest, PostLongResponse
+from src.schemas.post import PostCreateRequest, PostLongResponse, PostResponse
 from src.schemas.user import (
     RatingRequest,
     UserCreateRequest,
@@ -18,6 +18,7 @@ from src.schemas.user import (
 )
 from src.services.user import UserService
 from src.utils.client import getCockroachClient, getFirebaseClient
+from src.utils.enums import PostCategory
 
 USER_PREFIX = "/user"
 user_router = APIRouter(prefix=USER_PREFIX)
@@ -29,7 +30,7 @@ ENDPOINT_ADD_FEEDBACK = "/add-feedback/"  # done
 ENDPOINT_UPDATE_USER = "/update-user/"  # done
 ENDPOINT_NEW_POST = "/new-post/"  # done
 ENDPOINT_LIST_POST = "/list-posts/"  # done
-ENDPOINT_GET_LEADERBOARD = "/get-leaderboard/" # pending
+ENDPOINT_GET_LEADERBOARD = "/{category}/get-leaderboard/"  # pending
 
 
 @user_router.post(ENDPOINT_CREATE_USER)
@@ -122,4 +123,13 @@ async def get_list_post(
 ):
     return UserService.fetch_posts(
         user=verified_user.requesting_user, cockroach_client=cockroach_client
+    )
+
+
+@user_router.get(ENDPOINT_GET_LEADERBOARD, response_model=list[PostResponse])
+async def get_leaderboard(
+    category: str, cockroach_client: CockroachDBClient = Depends(getCockroachClient)
+):
+    return UserService.fetch_leaderboard(
+        cockroach_client=cockroach_client, category=PostCategory[category]
     )

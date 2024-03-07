@@ -6,7 +6,7 @@ from src.utils.enums import PostCategory
 
 class AssessmentView(DBSchemaBase):
     post_category: PostCategory
-    positive_score: int
+    post_score: int
 
     @classmethod
     def _schema_cls(cls) -> Type[Base]:

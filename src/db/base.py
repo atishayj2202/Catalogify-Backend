@@ -190,6 +190,38 @@ class DBSchemaBase(BaseModel, ABC):
         return None
 
     @classmethod
+    def get_by_multiple_field_counted(
+        cls,
+        db: Session,
+        fields: list[str],
+        match_values: list[Any],
+        count: int,
+        error_not_exist: bool = False,
+    ) -> list[DBSchemaBase] | None:
+        schema_cls = cls._schema_cls()
+        result = (
+            db.query(schema_cls)
+            .filter(
+                and_(
+                    *(
+                        getattr(schema_cls, f) == v
+                        for f, v in zip(fields, match_values)
+                    ),
+                )
+            )
+            .order_by(getattr(schema_cls, "post_score").desc())
+            .limit(count)
+            .all()
+        )
+        if result:
+            return [cls.model_validate(r, from_attributes=True) for r in result]
+        if error_not_exist:
+            raise Exception(
+                f"Could not find a record in {schema_cls.__name__} with {fields} {match_values}"
+            )
+        return None
+
+    @classmethod
     def get_by_multiple_field_unique(
         cls,
         db: Session,

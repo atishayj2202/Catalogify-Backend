@@ -19,15 +19,6 @@ class PostCreateRequest(BaseModel):
     in_box: str | None = None
 
 
-class PostShortResponse(BaseModel):
-    id: UUID
-    created_at: datetime
-    title: str
-    category: PostCategory
-    images: list[str]
-    description: str
-
-
 class PostLongResponse(BaseModel):
     id: UUID
     created_at: datetime
@@ -43,6 +34,14 @@ class PostLongResponse(BaseModel):
     return_days: int = 0
     seller_location: str | None = None
     in_box: str | None = None
+
+
+class PostResponse(BaseModel):
+    id: UUID
+    created_at: datetime
+    data: PostLongResponse | None = None
+    score: int
+    likes: int = 0
 
 
 class PostEditRequest(BaseModel):

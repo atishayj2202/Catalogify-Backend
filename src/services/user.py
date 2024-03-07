@@ -12,7 +12,9 @@ from src.client.openai_client import OpenAIClient
 from src.db.table.feedback import Feedback
 from src.db.table.post import Post
 from src.db.table.user import User
-from src.schemas.post import PostCreateRequest, PostLongResponse
+from src.db.view.likes_view import LikesView
+from src.db.view.post_assessments import AssessmentView
+from src.schemas.post import PostCreateRequest, PostLongResponse, PostResponse
 from src.schemas.user import (
     RatingRequest,
     UserCreateRequest,
@@ -20,6 +22,7 @@ from src.schemas.user import (
     UserUpdateRequest,
 )
 from src.services.post import PostService
+from src.utils.enums import PostCategory
 
 
 class UserService:
@@ -185,3 +188,54 @@ class UserService:
                 )
             )
         return temp
+
+    @classmethod
+    def fetch_leaderboard(
+        cls, cockroach_client: CockroachDBClient, category: PostCategory
+    ) -> list[PostResponse]:
+        data: list[AssessmentView] | None = cockroach_client.query(
+            AssessmentView.get_by_multiple_field_counted,
+            fields=["post_category"],
+            match_values=[category],
+            count=50,
+            error_not_exist=False,
+        )
+        if data is None:
+            return []
+        main = {}
+        for i in data:
+            main[i.id] = PostResponse(
+                id=i.id, created_at=i.created_at, score=i.post_score
+            )
+        data: list[LikesView] | None = cockroach_client.query(
+            LikesView.get_by_field_value_list,
+            field="id",
+            match_values=list(main.keys()),
+            error_not_exist=False,
+        )
+        for i in data:
+            main[i.id].likes = i.positive_reactions
+        data: list[Post] | None = cockroach_client.query(
+            Post.get_by_field_value_list,
+            field="id",
+            match_values=list(main.keys()),
+            error_not_exist=False,
+        )
+        for post in data:
+            main[post.id].data = PostLongResponse(
+                id=post.id,
+                created_at=post.created_at,
+                user_id=post.user_id,
+                title=post.title,
+                category=post.category,
+                images=post.images,
+                description=post.description,
+                cost=post.cost,
+                brand=post.brand,
+                warranty_yrs=post.warranty_yrs,
+                warranty_months=post.warranty_months,
+                return_days=post.return_days,
+                seller_location=post.seller_location,
+                in_box=post.in_box,
+            )
+        return list(main.values())
