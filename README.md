@@ -24,7 +24,7 @@ This section contains links to the frontend and backend repositories, as well as
 - **Database**: PostgresSQL( Azure SQL)
 - **Authentication**: Firebase Authentication
 - **Deployment**: Azure Container App
-- **OpenAI/ChatGpt**: Vaildation of text and quality
+- **OpenAI ChatGpt**: Vaildation and quality of text.
 - **Microsoft Azure Computer Vision**: Image detection    
 - **Poetry**: Poetry is used as the dependency manager for managing Python packages and dependencies.
 
@@ -35,7 +35,7 @@ The backend project follows a standard fastAPI project structure with modular ap
 - **db**: This directory handles the database interactions and includes the schema definition for each table and view. 
   - The base.py file contains the parent Schema and basic algorithms for each table. 
   - The tables subdirectory contains schema definitions for various database tables, while the views subdirectory contains schema definitions for database views.
-- **Schema**: Contains schema definitions for requests and responses. This helps maintain a structured approach to handling data exchanges.
+- **schemas**: Contains schema definitions for requests and responses. This helps maintain a structured approach to handling data exchanges.
 - **routers**: Contains router modules for FastAPI. These routers define the API endpoints and link them to appropriate handlers.
 - **services**: Includes algorithms to handle queries in the database and return data. These services encapsulate business logic related to data manipulation.
 - **main.py**: This is the entry point of the application. It connects all routers to FastAPI, initializing the web server and defining routes.
