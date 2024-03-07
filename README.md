@@ -13,7 +13,7 @@ This section contains links to the frontend and backend repositories, as well as
 -  Repository URL:(https://github.com/atishayj2202/InnoHack-Hackathon-Backend)
 
 ### Backend API Endpoint Base URL
--Base URL: https://innohack-hackathon-server.yellowbush-cadc3844.centralindia.azurecontainerapps.io 
+-  Base URL: https://innohack-hackathon-server.yellowbush-cadc3844.centralindia.azurecontainerapps.io 
 ### Backend API Endpoint Documentation
 
 - Documentation URL: https://innohack-hackathon-server.yellowbush-cadc3844.centralindia.azurecontainerapps.io/docs
