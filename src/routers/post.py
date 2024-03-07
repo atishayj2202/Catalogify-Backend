@@ -71,6 +71,7 @@ async def get_create_assessment(
     )
     return Response(status_code=status.HTTP_200_OK)
 
+
 @post_router.get("/test/")
 async def get_create_assessment(
     cockroach_client: CockroachDBClient = Depends(getCockroachClient),
@@ -78,8 +79,7 @@ async def get_create_assessment(
     image_parser_client: ComputerVisionCli = Depends(ComputerVisionCli),
 ):
     post = cockroach_client.query(
-        Post.get_id,
-        id="efbff5e2-8235-432c-b343-6a9b072ae494"
+        Post.get_id, id="efbff5e2-8235-432c-b343-6a9b072ae494"
     )
     PostService.post_assessment(
         post=post,
@@ -88,6 +88,7 @@ async def get_create_assessment(
         image_parser_client=image_parser_client,
     )
     return Response(status_code=status.HTTP_200_OK)
+
 
 @post_router.get(ENDPOINT_GET_ASSESSMENT, response_model=AssessmentResponse)
 async def get_create_assessment(
