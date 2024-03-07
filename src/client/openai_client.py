@@ -24,6 +24,7 @@ class OpenAIClient:
     def get_reply(self, messages: list[dict]) -> str:
         response: ChatCompletion = self.client.chat.completions.create(
             model="gpt-3.5-turbo",
+            temperature=0.05,
             response_format={"type": "json_object"},
             messages=messages,
         )
