@@ -30,7 +30,8 @@ ENDPOINT_ADD_FEEDBACK = "/add-feedback/"  # done
 ENDPOINT_UPDATE_USER = "/update-user/"  # done
 ENDPOINT_NEW_POST = "/new-post/"  # done
 ENDPOINT_LIST_POST = "/list-posts/"  # done
-ENDPOINT_GET_LEADERBOARD = "/{category}/get-leaderboard/"  # pending
+ENDPOINT_GET_LEADERBOARD = "/{category}/get-leaderboard/"  # done
+ENDPOINT_NEW_POSTS = "/add-post-by-json/"
 
 
 @user_router.post(ENDPOINT_CREATE_USER)
@@ -113,6 +114,28 @@ async def post_new_post(
         ai_client=ai_client,
         image_parser_client=image_parser_client,
     )
+    return Response(status_code=status.HTTP_200_OK)
+
+
+@user_router.post(ENDPOINT_NEW_POSTS)
+async def post_new_post(
+    request: list[PostCreateRequest],
+    verified_user: VerifiedUser = Depends(verify_user),
+    cockroach_client: CockroachDBClient = Depends(getCockroachClient),
+    ai_client: OpenAIClient = Depends(OpenAIClient),
+    image_parser_client: ComputerVisionCli = Depends(ComputerVisionCli),
+):
+    for i in request:
+        try:
+            UserService.create_post(
+                user=verified_user.requesting_user,
+                request=i,
+                cockroach_client=cockroach_client,
+                ai_client=ai_client,
+                image_parser_client=image_parser_client,
+            )
+        except:
+            pass
     return Response(status_code=status.HTTP_200_OK)
 
 
