@@ -1,16 +1,16 @@
-# Innohack Backend - Innohack Hackathon
+# Catalogify Backend
 
-Welcome to the Innohack backend repository for the Innohack Hackathon! This backend repository serves as the core infrastructure powering the Catalogify platform,offers a friendly interface, letting you access Catalogify's features easily on your phone. Search, manage tasks, and communicate effortlessly.
+Welcome to the Catalogify backend repository! This backend repository serves as the core infrastructure powering the Catalogify platform,offers a friendly interface, letting you access Catalogify's features easily on your phone. Search, manage tasks, and communicate effortlessly.
 
 ## Project Links
 
 This section contains links to the frontend and backend repositories, as well as the base URL and documentation for the backend API.
 
 ### Frontend Repository
--  Repository URL: [(https://github.com/Ahmedazim7804/InnoHack)](https://github.com/Ahmedazim7804/InnoHack)
+-  Repository URL: [https://github.com/Ahmedazim7804/Catalogify-Frontend](https://github.com/Ahmedazim7804/Catalogify-Frontend)
 
 ### Backend Repository
--  Repository URL:(https://github.com/atishayj2202/InnoHack-Hackathon-Backend)
+-  Repository URL:[https://github.com/atishayj2202/Catalogify-Backend](https://github.com/atishayj2202/Catalogify-Backend)
 
 ### Backend API Endpoint Base URL
 -  Base URL: https://innohack-hackathon-server.yellowbush-cadc3844.centralindia.azurecontainerapps.io 
@@ -82,4 +82,3 @@ The option can be:
 - Atishaya Jain
 - Ajeem Ahmed
 - Khushal Bhasin
-- Dimple Yadav
